@@ -1,22 +1,17 @@
 import express from 'express';
-import create from '../controllers/city/create';
+import cityController from '../controllers/city/cityController.js'
+const { getAllCities, createCity, getOneCity, updateCity, deleteCity } = cityController
 const router = express.Router();
 
 /* GET home page. */
-router.get('/', read);
+router.get('/', getAllCities);
 
-router.get('/:id', function (req, res, next) {
-    res.render();
-});
+router.get('/:id', getOneCity);
 
-router.put('/:id', function (req, res, next) {
-    res.render();
-});
+router.put('/:id', updateCity);
 
-router.post('/', create);
+router.post('/', createCity);
 
-router.delete('/:id', function (req, res, next) {
-    res.render();
-});
+router.delete('/:id', deleteCity);
 
 export default router;
