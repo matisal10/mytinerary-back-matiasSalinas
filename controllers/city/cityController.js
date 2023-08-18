@@ -43,6 +43,28 @@ const cityController = {
         }
     },
 
+    searchCityByName:async (req, res, next) =>{
+        try {
+            let cityName = req.params.name;
+            if(cityName){
+                let cities = await City.find({name: new RegExp(cityName,'i')})
+                return res.status(200).json({
+                    success: true,
+                    message: 'City Find successfully',
+                    cities
+                });
+            }
+
+            
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                success: false,
+                message: 'Error find city'
+            });
+        }
+    },
+    
     updateCity: async (req, res, next) => {
         const { id } = req.params;
         try {
