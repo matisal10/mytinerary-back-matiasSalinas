@@ -1,9 +1,11 @@
 import express from 'express';
 import itineraryController from '../controllers/itineraries/itineraryController.js'
-const {getAllItineraries,getAllItinerariesForCity, createItineraryForCity, deleteItinerary, updateItinerary} = itineraryController
+const {getAllItineraries,getAllItinerariesForCity, getOneItinerary , createItineraryForCity, deleteItinerary, updateItinerary} = itineraryController
 const router = express.Router();
 
 router.get('/', getAllItineraries);
+
+router.get('/itineraries/:id', getOneItinerary);
 
 router.get('/:id', getAllItinerariesForCity);
 

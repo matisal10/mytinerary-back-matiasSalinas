@@ -20,6 +20,32 @@ const itineraryController = {
         }
     },
 
+    getOneItinerary: async (req, res, next) => {
+        const { id } = req.params
+        try {
+            const itinerary = await Itinerary.findById(id);
+
+            if (!itinerary) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'itinerary not found'
+                });
+            }
+
+            return res.status(200).json({
+                success: true,
+                message: 'Get one itinerary successfully',
+                response: itinerary
+            });
+        } catch (error) {
+            console.log(error);
+            next(error);
+            return res.status(500).json({
+                success: false,
+                message: 'Error retrieving itinerary'
+            });
+        }
+    },
 
     getAllItinerariesForCity: async (req, res, next) => {
         const { id } = req.params
@@ -49,6 +75,7 @@ const itineraryController = {
     },
 
 
+
     createItineraryForCity: async (req, res, next) => {
         const { id } = req.params;
         try {
@@ -60,7 +87,7 @@ const itineraryController = {
                 });
             }
 
-            const newItineraryData = req.body; // Datos del nuevo itinerario
+            const newItineraryData = req.body;
             const newItinerary = new Itinerary(newItineraryData); // Crea un nuevo documento de itinerario
             await newItinerary.save(); // Guarda el nuevo itinerario en la colección
 
