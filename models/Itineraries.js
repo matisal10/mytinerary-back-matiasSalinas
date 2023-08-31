@@ -1,4 +1,6 @@
-import { Schema } from "mongoose";
+import { Schema, model, Types } from "mongoose";
+
+let collection = "Itinerary";
 
 const itinerarySchema = new Schema({
     name: { type: String, required: true },
@@ -13,4 +15,6 @@ const itinerarySchema = new Schema({
     comments: []
 });
 
-export default itinerarySchema;
+const Itinerary = model(collection, itinerarySchema);
+
+export default Itinerary;
