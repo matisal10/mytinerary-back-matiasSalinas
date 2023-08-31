@@ -83,17 +83,9 @@ const itineraryController = {
 
 
     updateItinerary: async (req, res, next) => {
-        const { cityId, itineraryId } = req.params;
+        const { id } = req.params;
         try {
-            const city = await City.findById(cityId);
-            if (!city) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'City not found'
-                });
-            }
-
-            const itinerary = await Itinerary.findById(itineraryId);
+            const itinerary = await Itinerary.findById(id);
             if (!itinerary) {
                 return res.status(404).json({
                     success: false,
@@ -121,9 +113,24 @@ const itineraryController = {
 
 
     deleteItinerary: async (req, res, next) => {
-        const { cityId, itineraryId } = req.params;
+        const { itineraryId } = req.params;
         try {
-            const city = await City.findById(cityId);
+            const deletedItinerary = await Itinerary.findByIdAndDelete(itineraryId);
+
+            if (!deletedItinerary) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Itinerary not found'
+                });
+            }
+
+            // Eliminar la referencia del itinerario de la ciudad
+            const city = await City.findOneAndUpdate(
+                { 'itineraries': itineraryId },
+                { $pull: { 'itineraries': itineraryId } },
+                { new: true }
+            );
+
             if (!city) {
                 return res.status(404).json({
                     success: false,
@@ -131,23 +138,10 @@ const itineraryController = {
                 });
             }
 
-            const itineraryIndex = city.itineraries.indexOf(itineraryId);
-            if (itineraryIndex === -1) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'Itinerary not found'
-                });
-            }
-
-            city.itineraries.splice(itineraryIndex, 1);
-            await city.save();
-
-            // Ahora, también eliminamos el itinerario de la colección de itinerarios
-            await Itinerary.findByIdAndDelete(itineraryId);
-
             return res.status(200).json({
                 success: true,
-                message: 'Itinerary deleted successfully'
+                message: 'Itinerary deleted successfully',
+                deletedItinerary
             });
         } catch (error) {
             console.log(error);
