@@ -16,8 +16,7 @@ export const signInSchema = joi.object({
         "any.required": "El campo email es requerido",
         "string.email": "El email debe tener @ y .com"
     }),
-    password: joiPwd(complexityOptions).required().messages({
-        "string.empty": "La password no puede estar vacio",
-        "any.required": "password es requerido",
+    password: joiPwd(complexityOptions).messages({
+
     })
 })

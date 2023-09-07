@@ -16,7 +16,7 @@ export const signUpSchema = joi.object({
         "any.required": "El campo email es requerido",
         "string.email": "El email debe tener @ y .com"
     }),
-    lastName: joi.string().email().required().messages({
+    lastName: joi.string().required().messages({
         "string.empty": "El lastName no puede estar vacio",
         "any.required": "El campo lastName es requerido",
     }),
