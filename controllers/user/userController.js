@@ -15,9 +15,10 @@ const authController = {
             const newUser = await User.create(body)
 
             const token = jwt.sign( { email : newUser.email, photo: newUser.photo }, process.env.SECRET_KEY, { expiresIn:'2h' } )
+            let { email, photo } = newUser
             return res.status(201).json({
                 success: true,
-                userData: newUser,
+                userData: { email, photo },
                 token : token,
                 message: 'Sign up successfully'
             })
@@ -59,6 +60,16 @@ const authController = {
             next(error)
         }
     },
+
+    loginWithToken : (req, res) => {
+        const { email,name, photo} = req.user
+        res.status(200).json({
+            success: true,
+            userData: { email,name, photo},
+            message: 'Sign in successfully',
+        })
+    }
+
 }
 
 export default authController;
