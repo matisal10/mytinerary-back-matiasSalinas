@@ -5,12 +5,10 @@ const validator = (schema) => (req, res, next) => {
 
     if (validation.error) {
         console.log(validation)
-        return res.json(validation.error)
+        return res.status(400).json(validation.error)
     }
-    else{
-        return next()
-    }
-    
+    return next()
+
 }
 
 export default validator
