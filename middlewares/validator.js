@@ -7,8 +7,10 @@ const validator = (schema) => (req, res, next) => {
         console.log(validation)
         return res.json(validation.error)
     }
-    return next()
-
+    else{
+        return next()
+    }
+    
 }
 
 export default validator
