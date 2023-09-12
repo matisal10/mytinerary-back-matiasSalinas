@@ -16,6 +16,5 @@ export const signInSchema = joi.object({
         "string.email": "El email debe tener @ y .com"
     }),
     password: joiPwd(complexityOptions).messages({
-
     })
 })
