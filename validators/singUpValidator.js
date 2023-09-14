@@ -27,6 +27,6 @@ export const signUpSchema = joi.object({
         "string.min": "El minimo es 3 caracteres",
         "any.required": "El campo Name es requerido",
     }),
-    photo: joi.string(),
+    photo: joi.string().allow(null, ''),
     country: joi.string()
 })
